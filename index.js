@@ -15,4 +15,6 @@ app.get('/api/item/:slug', (req, res) => {
   res.end(`Item: ${slug}`);
 });
 
+app.listen(process.env.PORT || 3000);
+
 export default app;
