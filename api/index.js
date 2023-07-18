@@ -1,6 +1,7 @@
 import express from "express"
 import { v4 } from "uuid";
 
+const app = express();
 
 app.get('/api', (req, res) => {
   const path = `/api/item/${v4()}`;
