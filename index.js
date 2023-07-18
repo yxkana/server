@@ -91,9 +91,7 @@ const NOTE = mongoose.model("NOTES", noteSchema);
 const USER = mongoose.model("USERS", userSchema);
 const PROJECT = mongoose.model("PROJECT", projectSchema);
 
-
-
-app.post("/api/register", async (req, res) => {
+app.post("/notes/register", async (req, res) => {
   const email = req.body.user;
   const _identity = uniqueString();
   const _shortIdentity = _identity.slice(0, 5);
@@ -118,6 +116,10 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+app.get("/notes/",(req,res)=>{
+  res.send("Its working on vercel");
+})
+
 /* app.get("/notes/test", (req,res)=>{
 	const _identity = uniqueString();
   	const _shortIdentity = _identity.slice(0,5);
@@ -126,7 +128,7 @@ app.post("/api/register", async (req, res) => {
   
 }); */
 
-app.post("/api/login", async (req, res) => {
+app.post("/notes/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.pwd;
 
@@ -167,11 +169,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.get("/api",(req,res)=>{
-  res.send("Its Working on varcel");
-})
-
-app.get("/api/logout", async (req, res) => {
+app.get("/notes/logout", async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204);
   const refreshToken = cookies.jwt;
@@ -188,7 +186,7 @@ app.get("/api/logout", async (req, res) => {
   res.sendStatus(204);
 });
 
-app.get("/api/refresh", async (req, res) => {
+app.get("/notes/refresh", async (req, res) => {
   const cookies = req.cookies;
 
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -219,7 +217,7 @@ app.get("/api/refresh", async (req, res) => {
 
 app.use(verifyJWT);
 
-app.post("/api/createnote", async (req, res) => {
+app.post("/notes/createnote", async (req, res) => {
   const cookies = req.cookies;
   const note = req.body;
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -242,7 +240,7 @@ app.post("/api/createnote", async (req, res) => {
   } catch (err) {}
 });
 
-app.post("/api/deletenote", async (req, res) => {
+app.post("/notes/deletenote", async (req, res) => {
   const cookies = req.cookies;
   const _index = req.body.index;
 
@@ -260,7 +258,7 @@ app.post("/api/deletenote", async (req, res) => {
   }
 });
 
-app.patch("/api/movetoprogress", async (req, res) => {
+app.patch("/notes/movetoprogress", async (req, res) => {
   const cookies = req.cookies;
   const _index = req.body.index;
   const _id = req.body.id;
@@ -281,7 +279,7 @@ app.patch("/api/movetoprogress", async (req, res) => {
   }
 });
 
-app.get("/api/getfriends", async (req, res) => {
+app.get("/notes/getfriends", async (req, res) => {
   const cookies = req.cookies;
   console.log("yoooooooooooooooooooooooo");
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -296,7 +294,7 @@ app.get("/api/getfriends", async (req, res) => {
   }
 });
 
-app.post("/api/addfriend", async (req, res) => {
+app.post("/notes/addfriend", async (req, res) => {
   console.log("ssss");
   const cookies = req.cookies;
   const _friendId = req.body.id;
@@ -319,7 +317,7 @@ app.post("/api/addfriend", async (req, res) => {
   }
 });
 
-app.post("/api/acceptFriend", async (req, res) => {
+app.post("/notes/acceptFriend", async (req, res) => {
   const cookies = req.cookies;
   const _friendId = req.body.senderId;
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -349,7 +347,7 @@ app.post("/api/acceptFriend", async (req, res) => {
   }
 });
 
-app.patch("/api/movetocomplete", async (req, res) => {
+app.patch("/notes/movetocomplete", async (req, res) => {
   const cookies = req.cookies;
   const _id = req.body.id;
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -370,13 +368,13 @@ app.patch("/api/movetocomplete", async (req, res) => {
 
 //DashBoard => UserTab => Functions
 /* ---------------------------------------- Start ---------------------------------------- */
-app.get("",(req,res)=>{
+app.get("/",(req,res)=>{
   res.send("Yooo");
 })
 
 
 
-app.get("/api/getuserinfo", async (req, res) => {
+app.get("/notes/getuserinfo", async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -411,7 +409,7 @@ app.get("/api/getuserinfo", async (req, res) => {
   }
 });
 
-app.patch("/api/changename", async (req, res) => {
+app.patch("/notes/changename", async (req, res) => {
   const _newName = req.body.value;
 
   const cookies = req.cookies;
@@ -426,7 +424,7 @@ app.patch("/api/changename", async (req, res) => {
   }
 });
 /* ---------------------------------------- End ---------------------------------------- */
-app.get("/api/notes", async (req, res) => {
+app.get("/notes", async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -440,14 +438,14 @@ app.get("/api/notes", async (req, res) => {
   }
 });
 
-app.post("/api/findUser", async (req, res) => {
+app.post("/notes/findUser", async (req, res) => {
   const _user = req.body.user;
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
 });
 
-app.post("/api/postproject", async (req, res) => {
+app.post("/notes/postproject", async (req, res) => {
   const cookies = req.cookies;
   const _project = req.body;
   if (!cookies?.jwt) return res.sendStatus(401);
@@ -479,7 +477,7 @@ app.post("/api/postproject", async (req, res) => {
   }
 });
 
-app.get("/api/fetchProjectsInfo", async (req, res) => {
+app.get("/notes/fetchProjectsInfo", async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -514,7 +512,7 @@ app.get("/api/fetchProjectsInfo", async (req, res) => {
 /* Project Tasks API CRUD OPERATION */
 /* -------------------------------START------------------------------- */
 
-app.post("/api/fetchProjectsTasks", async (req, res) => {
+app.post("/notes/fetchProjectsTasks", async (req, res) => {
   const cookies = req.cookies;
   const id = req.body.projectId;
   console.log(req.body);
@@ -530,7 +528,7 @@ app.post("/api/fetchProjectsTasks", async (req, res) => {
   }
 });
 
-app.post("/api/saveProjectTask", async (req, res) => {
+app.post("/notes/saveProjectTask", async (req, res) => {
   const cookies = req.cookies;
   console.log("popopyyyyopopop");
   const { projectId, taskId, title, msg, priority, tags, status,creator } = req.body;
@@ -560,7 +558,7 @@ app.post("/api/saveProjectTask", async (req, res) => {
   }
 });
 
-app.patch("/api/moveProjectTask", async (req, res) => {
+app.patch("/notes/moveProjectTask", async (req, res) => {
   const cookies = req.cookies;
   const { projectId, taskId, status } = req.body;
   console.log(taskId);
@@ -591,7 +589,7 @@ app.patch("/api/moveProjectTask", async (req, res) => {
   }
 });
 
-app.post("/api/deleteProjectTask", async (req, res) => {
+app.post("/notes/deleteProjectTask", async (req, res) => {
   const cookies = req.cookies;
   const { projectId, taskId, index, status } = req.body;
   console.log(req.body);
@@ -617,7 +615,7 @@ app.post("/api/deleteProjectTask", async (req, res) => {
 });
 /* -------------------------------END------------------------------- */
 
-app.post("/api/sendTask", async (req, res) => {
+app.post("/notes/sendTask", async (req, res) => {
   const cookies = req.cookies;
   const { data } = req.body;
   if (!cookies?.jwt) return res.sendStatus(401);
